@@ -1,16 +1,15 @@
 import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import MainRouter from './router/MainRouter';
-import { RecoilRoot } from 'recoil';
+import LoginRouter from './router/LoginRouter';
 
 function App() {
   return (
     <ChakraProvider>
-      <RecoilRoot>
-        <BrowserRouter>
-          <MainRouter />
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <LoginRouter />
+        <MainRouter />
+      </BrowserRouter>
     </ChakraProvider>
   );
 }
