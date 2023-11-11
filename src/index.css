@@ -1,9 +1,6 @@
-
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
 body {
   margin: 0;
-  font-family: 'Pretendard', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #444;
