@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Drawing from '../../components/template/drawing';
-import CheckUsersInGameRoom from '../../components/layout/checkUsersInGameRoom';
 import LeaveGameRoom from '../../components/layout/leaveGameRoom';
 import { useRecoilState } from 'recoil';
 import { chattingIdState } from '../../states/atom';
@@ -10,15 +9,17 @@ import inviteImg from '../../assets/icons/invite.png';
 import GameChatting from '../../components/template/GameChatting';
 import CheckUser from '../../components/template/CheckUser';
 
+import { controlBack } from '../../hooks/leaveHandle';
 const GameRoom = () => {
   const { id } = useParams();
   const [chat, setChat] = useRecoilState(chattingIdState);
-
   useEffect(() => {
     if (id) {
       setChat(id.substring(1));
     }
   }, [id, setChat]);
+  // controlGameRoomReload(chat);
+  controlBack();
 
   return (
     <Game>

@@ -19,10 +19,6 @@ export const loginSocket = (
     serverSocket?.emit('users-server');
   });
 
-  serverSocket.on('error', (error) => {
-    console.error('Socket.IO connection error:', error);
-  });
-
   serverSocket.on('users-server-to-client', (data) => {
     onDataReceived(data);
   });

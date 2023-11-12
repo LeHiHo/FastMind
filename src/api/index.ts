@@ -39,13 +39,14 @@ export const getAllUsers = async (accessToken: string) => {
   return res;
 };
 
-export const getUsers = async (accessToken: string, userId: string) => {
-  const res = await client.get(`users?userId=${userId}`, {
+export const getUserData = async (accessToken: string, userId: string) => {
+  const res = await client.get(`/user?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return res;
+
+  return res.data;
 };
 
 export const createGameRooms = async (
@@ -93,16 +94,6 @@ export const participateGameRoom = async (
 
 export const getAllMyChat = async (accessToken: string) => {
   const res = await client.get(`chat`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  return res.data;
-};
-
-
-export const getUserData = async (accessToken: string, userId: any) => {
-  const res = await client.get(`/user?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

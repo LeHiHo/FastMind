@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Modal,
@@ -18,8 +18,37 @@ import {
   Text,
   Button,
 } from '@chakra-ui/react';
+import { useRecoilValue } from 'recoil';
+import { accessTokenState } from '../../states/atom';
+import { getMyUserData } from '../../util/util';
 
-const UserProfile = () => {
+const UserProfile: React.FC<{ userImg: string }> = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [name, setName] = useState('');
+  const [isHovering, setIsHovering] = useState(false);
+  const [filePreviewUrl, setFilePreviewUrl] = useState('');
+  const [formData, setFormData] = useState({
+    picture: '',
+  });
+  const [mydata, setMydata] = useState('');
+
+  const accessToken: string = useRecoilValue(accessTokenState);
+  const userId = localStorage.getItem('id');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (accessToken && userId) {
+        try {
+          const res = await getMyUserData(accessToken, userId);
+          setMydata(res.user.picture);
+        } catch (error) {
+          console.error('내정보를 가져오는데 실패했습니다.:', error);
+        }
+      }
+    };
+    fetchData();
+  }, [accessToken, userId]);
+
   const handleImgUploader = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
 
@@ -33,19 +62,9 @@ const UserProfile = () => {
           setFormData({ ...formData, picture: result });
         }
       };
-
       reader.readAsDataURL(file);
     }
   };
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [name, setName] = useState('');
-
-  const [isHovering, setIsHovering] = useState(false);
-  const [filePreviewUrl, setFilePreviewUrl] = useState('');
-  const [formData, setFormData] = useState({
-    picture: '',
-  });
 
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +83,7 @@ const UserProfile = () => {
         <Box
           width={100}
           height={100}
-          backgroundImage={'src/assets/icons/card.png'}
+          backgroundImage={mydata}
           borderRadius={10}
           marginRight={23}></Box>
         <Box>

@@ -95,7 +95,7 @@ const CheckPrivateChat = () => {
         allMyChat.map((element, index) => (
           <div key={index}>
             <div onClick={() => handleChatDetailModal(element.id)}>
-              <p>{element.latestMessage.text}</p>
+              <p>{element?.latestMessage?.text}</p>
               {element.users.some((user: any) => user.isOnline) && (
                 <p>온라인</p>
               )}

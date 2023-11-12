@@ -18,7 +18,7 @@ import {
   Box,
   Fade,
 } from '@chakra-ui/react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { accessTokenState, onlineUserState } from '../../states/atom';
 import { postLogin } from '../../api/index';
 import { loginSocket } from '../../api/socket';
