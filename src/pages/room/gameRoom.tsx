@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Drawing from '../../components/template/drawing';
-import LeaveGameRoom from '../../components/layout/leaveGameRoom';
+import Drawing from '../../components/template/room/drawing';
+import LeaveGameRoom from '../../components/template/room/leaveGameRoom';
 import { useRecoilState } from 'recoil';
 import { chattingIdState } from '../../states/atom';
 // import InviteGameRoom from '../../components/template/inviteGameRoom';
 import styled from 'styled-components';
-import inviteImg from '../../assets/icons/invite.png';
-import GameChatting from '../../components/template/GameChatting';
+
+import inviteImg from '/assets/icons/invite.png';
+import GameChatting from '../../components/template/room/GameChatting';
 // import CheckUser from '../../components/template/CheckUser';
 import { controlBack } from '../../hooks/leaveHandle';
-import CheckUsersInGameRoom from '../../components/layout/checkUsersInGameRoom';
+import CheckUsersInGameRoom from '../../components/template/room/checkUsersInGameRoom';
 
 const GameRoom = () => {
   const { id } = useParams();
@@ -136,8 +137,8 @@ const RoomMain = styled.div`
   margin-top: 20px;
 `;
 
-const UserList = styled.div`
-  margin-top: 20px;
-`;
+// const UserList = styled.div`
+//   margin-top: 20px;
+// `;
 
 export default GameRoom;

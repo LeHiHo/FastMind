@@ -1,33 +1,15 @@
-import { useEffect, useState } from 'react';
-import UserProfile from '../../components/template/userProfile';
-import OnlineUserList from '../../components/layout/onlineUserList';
-import { useRecoilValue } from 'recoil';
-import { accessTokenState } from '../../states/atom';
+import UserProfile from '../../components/template/lobby/userProfile';
+import OnlineUserList from '../../components/template/lobby/onlineUserList';
 import { Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
-import CheckGameRoom from '../../components/layout/checkGameRoom';
+import CheckGameRoom from '../../components/template/lobby/checkGameRoom';
 import { controlLobbyReload, controlBack } from '../../hooks/leaveHandle';
-import { getUserData } from '../../api/index';
 // import CreateGameRoom from '../../components/layout/createGameRoom';
 
 const GameLobby = () => {
-  const accessToken = useRecoilValue(accessTokenState);
-  const [imgsrc, setImgsrc] = useState('');
   controlLobbyReload();
   controlBack();
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const res = await getUserData(accessToken, 'hojin');
-        const user = res;
-        console.log(user);
-        setImgsrc(user.data[4].picture); // 이미지 소스 업데이트
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchUserData(); // 함수 호출
-  }, [accessToken]); // accessToken이 변경될 때마다 함수 호출
+
   return (
     <>
       <Flex

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { allUserState, onlineUserState } from '../../states/atom';
+import { allUserState, onlineUserState } from '../../../states/atom';
 import { useEffect, useState } from 'react';
 
 const OfflineUserList = () => {

@@ -203,7 +203,7 @@ const UserJoin = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}>
               <Img
-                src={filePreviewUrl || '/assets/inputImg.svg'}
+                src={filePreviewUrl || '/assets/img/inputImg.svg'}
                 alt="File preview"
                 width="100%"
                 height="100%"
@@ -229,7 +229,7 @@ const UserJoin = () => {
                   justifyContent="center"
                   alignItems="center">
                   <Img
-                    src="public/assets/trashBin.svg"
+                    src="/assets/icons/trashBin.svg"
                     alt="Delete"
                     width="24px"
                     height="24px"

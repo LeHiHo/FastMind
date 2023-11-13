@@ -1,6 +1,6 @@
-import { getAllUsers } from '../../api';
+import { getAllUsers } from '../api';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenState, allUserState } from '../../states/atom';
+import { accessTokenState, allUserState } from '../states/atom';
 import usePollingData from './usePollingData';
 
 const userList = () => {

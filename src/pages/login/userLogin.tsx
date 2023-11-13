@@ -93,7 +93,7 @@ function UserLogin() {
         width={450}
         justifyContent={'flex-end'}>
         <Img
-          src="/assets/fastMind.svg"
+          src="/assets/img/fastMind.svg"
           position={'relative'}
           alt="fastMind"
           bottom={4}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createGameRooms } from '../../api';
+import { createGameRooms } from '../../../api';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenState, allRoomState } from '../../states/atom';
+import { accessTokenState, allRoomState } from '../../../states/atom';
 
 const CreateGameRoom = () => {
   const [allRooms, setAllRooms] = useRecoilState(allRoomState);

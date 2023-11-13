@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-import { allUserState, onlineUserState } from '../../states/atom';
-import userList from '../template/userList';
+import { allUserState, onlineUserState } from '../../../states/atom';
+import userList from '../../../util/userList';
 import {
   Card,
   Flex,

@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenState, allRoomState } from '../../states/atom';
+import { accessTokenState, allRoomState } from '../../../states/atom';
 import {
   getAllGameRooms,
   // getOnlyGameRoom,
   leaveGameRoom,
   participateGameRoom,
-} from '../../api';
+} from '../../../api';
 import { useNavigate } from 'react-router-dom';
-import usePollingData from '../template/usePollingData';
+import usePollingData from '../../../util/usePollingData';
 import Pagination from 'react-js-pagination';
 import {
   Flex,
@@ -30,7 +30,7 @@ import LobbyListTop from './lobbyListTop';
 import {
   disconnectChattingSocket,
   disconnectLoginSocket,
-} from '../../api/socket';
+} from '../../../api/socket';
 
 const CheckGameRoom = () => {
   const navigate = useNavigate();

@@ -5,14 +5,14 @@ import {
   privateChatDetail,
   privateChatNew,
   myUserDataState,
-} from '../../states/atom';
+} from '../../../states/atom';
 import { useState, useEffect } from 'react';
-import { chatSocket } from '../../api/socket';
+import { chatSocket } from '../../../api/socket';
 import {
   createSeparatedTime,
   sortCreatedAt,
   modifyDate,
-} from '../template/useChattingSort';
+} from '../../../util/useChattingSort';
 
 interface ChattingDetailProps {
   chatId: string;

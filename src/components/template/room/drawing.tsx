@@ -2,10 +2,10 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import drawImg from '../../assets/icons/draw.png';
-import eraseImg from '../../assets/icons/eraser.png';
-import trashImg from '../../assets/icons/trash.png';
-import { drawSocket } from '../../api/socket';
+import drawImg from '/assets/icons/draw.png';
+import eraseImg from '/assets/icons/eraser.png';
+import trashImg from '/assets/icons/trash.png';
+import { drawSocket } from '../../../api/socket';
 
 const Drawing = () => {
   const [isPainting, setIsPainting] = useState(false);

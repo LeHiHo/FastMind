@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import InfoImg from '../../assets/icons/info.png';
-import AaImg from '../../assets/icons/Aa.png';
-import sendImg from '../../assets/icons/send.png';
+import InfoImg from '/assets/icons/info.png';
+import AaImg from '/assets/icons/Aa.png';
+import sendImg from '/assets/icons/send.png';
 
 const GameChatting = () => {
   return (

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { getAllMyChat } from '../../api';
+import { getAllMyChat } from '../../../api';
 import {
   accessTokenState,
   myUserDataState,
   privateChatState,
   onlineUserState,
-} from '../../states/atom';
-import usePollingData from '../template/usePollingData';
+} from '../../../states/atom';
+import usePollingData from '../../../util/usePollingData';
 import ChattingDetail from './chattingDetail';
 
 const CheckPrivateChat = () => {

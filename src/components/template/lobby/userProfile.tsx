@@ -16,10 +16,10 @@ import {
   Text,
   Button,
 } from '@chakra-ui/react';
-import { getUserData, patchUserData } from '../../api';
+import { getUserData, patchUserData } from '../../../api';
 import { useRecoilState } from 'recoil';
-import { accessTokenState } from '../../states/atom';
-import { disconnectLoginSocket } from '../../api/socket';
+import { accessTokenState } from '../../../states/atom';
+import { disconnectLoginSocket } from '../../../api/socket';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
@@ -102,7 +102,7 @@ const UserProfile = () => {
       <Flex
         width={450}
         height={160}
-        backgroundImage={'src/assets/icons/card.png'}
+        backgroundImage={'/assets/img/card.png'}
         borderRadius={10}
         alignItems={'center'}
         justifyContent={'center'}
@@ -208,7 +208,7 @@ const UserProfile = () => {
                       justifyContent="center"
                       alignItems="center">
                       <Img
-                        src="public/assets/trashBin.svg" // 쓰레기통 이미지 경로
+                        src="/assets/icons/trashBin.svg" // 쓰레기통 이미지 경로
                         alt="Delete"
                         width="24px"
                         height="24px"

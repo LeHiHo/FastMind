@@ -54,7 +54,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 textDecoration: 'underline',
               }}>
               로그인
-              <Img src="/assets/rightArrow.svg" width="5px" height="9px" />
+              <Img
+                src="/assets/icons/rightArrow.svg"
+                width="5px"
+                height="9px"
+              />
             </Flex>
             <Flex
               alignItems={'center'}
@@ -64,7 +68,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 textDecoration: 'underline',
               }}>
               회원가입
-              <Img src="/assets/rightArrow.svg" width="5px" height="9px" />
+              <Img
+                src="/assets/icons/rightArrow.svg"
+                width="5px"
+                height="9px"
+              />
             </Flex>
           </Flex>
           <Flex
@@ -75,7 +83,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             borderTop="1px solid #E2E8F0"
             backgroundColor="#F7FAFC"
             height="60px">
-            <Img src="/assets/moon.svg" width="18px" height="18px" />
+            <Img src="/assets/icons/moon.svg" width="18px" height="18px" />
             <Text marginRight={9}>다크모드</Text>
             <Switch
               sx={{

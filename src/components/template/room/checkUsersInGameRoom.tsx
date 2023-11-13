@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { accessTokenState, onlineUserStateInGameRoom } from '../../states/atom';
+import {
+  accessTokenState,
+  onlineUserStateInGameRoom,
+} from '../../../states/atom';
 import { io } from 'socket.io-client';
-import { SERVER_URL, SERVER_ID } from '../../constant';
-import { getUserData } from '../../api';
-import UserProfile from '../template/userProfile';
+import { SERVER_URL, SERVER_ID } from '../../../constant';
+import { getUserData } from '../../../api';
+import UserProfile from '../lobby/userProfile';
 
 interface ChattingDetailProps {
   chatId: string;
