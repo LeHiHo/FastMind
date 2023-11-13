@@ -49,10 +49,11 @@ import { useEffect } from 'react';
 // };
 
 export const controlLobbyReload = () => {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [__, setAccessToken] = useRecoilState(accessTokenState);
   const navigate = useNavigate();
   useEffect(() => {
     const handleBeforeUnload = async (event: any) => {
+      console.log(event);
       localStorage.setItem('beforeLobbyUnload', 'true');
     };
 
@@ -86,7 +87,7 @@ export const controlLobbyReload = () => {
 };
 
 export const controlBack = () => {
-  history.pushState(null, null, location.href);
+  history.pushState(null, '', location.href);
 
   window.onpopstate = function () {
     history.go(1);

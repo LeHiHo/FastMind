@@ -2,8 +2,8 @@ import { AddIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { Button, Flex, Select, Icon } from '@chakra-ui/react';
 import { useState } from 'react';
 const LobbyListTop = () => {
-  const [sortOption, setSortOption] = useState('');
-  const [selectOption, setSelectOption] = useState('');
+  // const [sortOption, setSortOption] = useState('');
+  const [selectOption, __] = useState('');
   return (
     <Flex justifyContent={'space-between'} paddingBottom="10px">
       <Select

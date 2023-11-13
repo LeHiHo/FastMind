@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const [isChatContainerClicked, setIsChatContainerClicked] = useState(false);
   const [isMenuContainerClicked, setIsMenuContainerClicked] = useState(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
-  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [__, setIsChatModalOpen] = useState(false);
 
   const checkLocation = () => {
     titleAction(navigate, accessToken, id);

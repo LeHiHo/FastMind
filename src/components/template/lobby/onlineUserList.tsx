@@ -1,20 +1,10 @@
-import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { allUserState, onlineUserState } from '../../../states/atom';
 import userList from '../../../util/userList';
-import {
-  Card,
-  Flex,
-  Heading,
-  Image,
-  Text,
-  IconButton,
-  background,
-} from '@chakra-ui/react';
+import { Card, Flex, Heading, Image, Text, IconButton } from '@chakra-ui/react';
 import { ChatIcon } from '@chakra-ui/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import styled from 'styled-components';
 
 const OnlineUserList = () => {
   userList();
