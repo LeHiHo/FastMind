@@ -29,6 +29,11 @@ export const privateChatNew = atom<any[]>({
   default: [],
 });
 
+export const myPublicRooms = atom<any[]>({
+  key: 'myPublicRooms',
+  default: [],
+});
+
 export const onlineUserState = atom<any>({
   key: 'onlineUserState',
   default: [],

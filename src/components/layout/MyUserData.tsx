@@ -6,7 +6,7 @@ import { getCookie } from '../../util/util';
 
 const MyUserData = () => {
   const [myData, setMyData] = useRecoilState(myUserDataState);
-  const myUserId = localStorage.getItem('id');
+  const myUserId = getCookie('userId');
   useEffect(() => {
     const fetchData = async () => {
       try {

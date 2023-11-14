@@ -9,11 +9,14 @@ import styled from 'styled-components';
 import inviteImg from '../../assets/icons/invite.png';
 import GameChatting from '../../components/template/GameChatting';
 // import CheckUser from '../../components/template/CheckUser';
-import { controlBack } from '../../hooks/leaveHandle';
 import CheckUsersInGameRoom from '../../components/layout/checkUsersInGameRoom';
 import { roomIdState, usersInRoom } from '../../states/atom';
+import { controlBack, controlLobbyReload } from '../../hooks/leaveHandle';
 
 const GameRoom = () => {
+  controlLobbyReload();
+  controlBack();
+
   const { id } = useParams();
   const [chat, setChat] = useRecoilState(chattingIdState);
 

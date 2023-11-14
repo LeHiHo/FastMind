@@ -12,7 +12,7 @@ import { ChatIcon } from '@chakra-ui/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { createGameRooms, getAllMyChat } from '../../api';
-import { randomNameFunc } from '../../util/util';
+import { randomNameFunc, getCookie } from '../../util/util';
 import { useNavigate } from 'react-router-dom';
 
 interface ResponseValue {
@@ -46,7 +46,7 @@ const OnlineUserList = () => {
   const onLine = useRecoilValue(onlineUserState);
   const all = useRecoilValue(allUserState);
   const allOnlineUsers = onLine.users || [];
-  const userId = localStorage.getItem('id');
+  const userId = getCookie('userId');
   const allChatState = useRecoilValue(allRoomNumberState);
   const setRoomId = useSetRecoilState(roomIdState);
   const setUsersInRoom = useSetRecoilState(usersInRoom);
@@ -74,7 +74,6 @@ const OnlineUserList = () => {
       const chatId = matchingChat ? matchingChat.id : null;
       if (chatId) {
         //navigate(`/room/:${chatId}`);
-        console.log(privateChatArray);
       } else {
         const chat = await createGameRooms(element.id, [element.id], true);
         //navigate(`/room/:${chat.id}`);

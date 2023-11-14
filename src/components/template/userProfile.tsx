@@ -19,6 +19,7 @@ import {
 import { getUserData, patchUserData } from '../../api';
 import { disconnectLoginSocket } from '../../api/socket';
 import { useNavigate } from 'react-router-dom';
+import { getCookie, removeCookie } from '../../util/util';
 
 const UserProfile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,7 +31,7 @@ const UserProfile = () => {
   const [myName, setMyname] = useState('');
   const [myImg, setMyImg] = useState('');
 
-  const userId = localStorage.getItem('id');
+  const userId = getCookie('userId');
 
   const navigate = useNavigate();
 
@@ -39,7 +40,6 @@ const UserProfile = () => {
       if (userId) {
         try {
           const res = await getUserData(userId);
-          console.log(res);
           setMyID(res.user.id);
           setMyname(res.user.name);
           setMyImg(res.user.picture);
@@ -86,7 +86,7 @@ const UserProfile = () => {
   const handleUserLogout = () => {
     try {
       disconnectLoginSocket();
-      localStorage.removeItem('id');
+      removeCookie();
       alert('로그아웃에 성공했습니다');
       navigate('/');
     } catch (error) {

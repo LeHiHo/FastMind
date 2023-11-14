@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import MainRouter from './router/MainRouter';
 import { RecoilRoot } from 'recoil';

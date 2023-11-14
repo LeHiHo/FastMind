@@ -1,14 +1,17 @@
 import { NavigateFunction } from 'react-router';
 import { getAllUsers, leaveGameRoom, postRefresh, getUserData } from '../api';
 import { disconnectChattingSocket } from '../api/socket';
+import { useRef, useEffect } from 'react';
 
 export const setCookises = async (
   accessToken: string,
   refreshToken: string,
+  userId: string,
 ) => {
   try {
     document.cookie = `accessToken=${accessToken};max-age=3600;path=/;secure`;
     document.cookie = `refreshToken=${refreshToken};max-age=604800;path=/;secure`;
+    document.cookie = `userId=${userId};max-age=3600;path=/;secure`;
   } catch (e) {
     console.error(e);
     alert('쿠키설정에 실패했습니다.');
@@ -21,10 +24,19 @@ export function getCookie(name: string): string | undefined {
     .find((row) => row.startsWith(`${name}=`))
     ?.split('=')[1];
 
-  console.log(cookieValue);
-
   return cookieValue || undefined;
 }
+
+export const removeCookie = async () => {
+  try {
+    document.cookie = `accessToken='';expires=0;`;
+    document.cookie = `refreshToken='';expires=0;`;
+    document.cookie = `userId='';expires=0;`;
+  } catch (e) {
+    console.error(e);
+    alert('쿠키삭제에 실패했습니다.');
+  }
+};
 
 export const getAllUsersData = async () => {
   try {
@@ -96,4 +108,16 @@ export const randomNameFunc = () => {
   const randomIndex = Math.floor(Math.random() * data.length);
   const randomPick = data[randomIndex];
   return randomPick;
+};
+
+export const useUnload = (fn: any) => {
+  const cb = useRef(fn);
+
+  useEffect(() => {
+    const onUnload = cb.current;
+    window.addEventListener('beforeunload', onUnload);
+    return () => {
+      window.removeEventListener('beforeunload', onUnload);
+    };
+  }, [cb]);
 };

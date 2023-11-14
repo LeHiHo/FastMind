@@ -11,6 +11,7 @@ import {
   usersInRoom,
   allRoomNumberState,
 } from '../../states/atom';
+import { getCookie } from '../../util/util';
 
 interface Chats {
   id: string;
@@ -42,7 +43,7 @@ const LobbyListTop = () => {
   const allChatState = useRecoilValue(allRoomNumberState);
   const setRoomId = useSetRecoilState(roomIdState);
   const setUsersInRoom = useSetRecoilState(usersInRoom);
-  const userId = localStorage.getItem('id');
+  const userId = getCookie('userId');
 
   const navigate = useNavigate();
 
