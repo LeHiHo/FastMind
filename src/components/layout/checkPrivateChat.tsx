@@ -63,6 +63,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     if (userId) {
       try {
         let allMyChatData = await getAllMyChat();
+        console.log(allMyChatData);
         allMyChatData = allMyChatData.chats;
 
         // 비공개방만 필터
@@ -117,7 +118,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
       setAllMyChat(allChatData);
     }
   };
-
+  fetchData();
   usePollingData(fetchData, [allMyChat, setAllMyChat]);
 
   const handleChatDetailModal = async (
