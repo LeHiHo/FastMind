@@ -23,6 +23,7 @@ import { loginSocket } from '../../api/socket';
 import { postLogin } from '../../api/index';
 import { setCookies, getCookie, removeCookies } from '../../util/util';
 import swal from 'sweetalert';
+import { useLoginSocket } from '../../hooks/useLoginSocket';
 
 function UserLogin() {
   const navigate = useNavigate();
@@ -44,8 +45,10 @@ function UserLogin() {
       const res = await postLogin(id, password);
       setIsLogin(true);
       const { accessToken, refreshToken } = res.data;
-      setCookies(accessToken, refreshToken, id);
-
+      await setCookies(accessToken, refreshToken, id);
+      loginSocket(accessToken, (data) => {
+        setOnlineUsers(data); // Recoil 상태 업데이트
+      });
       swal({
         title: '로그인에 성공했습니다.',
         icon: 'success',
