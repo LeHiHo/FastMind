@@ -27,11 +27,7 @@ interface Message {
   createdAt: Date;
 }
 
-type UserProps = {
-  userData: User[];
-};
-
-const DetailChatLayout = ({ userData }: any) => {
+const DetailChatLayout = (chatId: any) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostData(e.target.value);
   };
@@ -51,64 +47,66 @@ const DetailChatLayout = ({ userData }: any) => {
   const myUserId: string | undefined = getCookie('userId');
   const openChatDetail = useRecoilValue(openChatDetailState);
 
-  console.log(userData);
+  console.log(chatId);
   const options = {
     suppressScrollX: true,
     suppressScrollY: false,
   };
 
   useEffect(() => {
-    try {
-      const newSocket = chatSocket(accessToken, userData.chatId);
-      setSocket(newSocket);
+    if (chatId) {
+      try {
+        const newSocket = chatSocket(accessToken, chatId.userData);
+        setSocket(newSocket);
 
-      newSocket.on('messages-to-client', (messageData) => {
-        console.log('Fetched messages:', messageData.messages);
+        newSocket.on('messages-to-client', (messageData) => {
+          console.log('Fetched messages:', messageData.messages);
 
-        if (messageData.messages.length > 0) {
-          // createdAt을 기준으로 시간순서 정렬
-          const sortedMessages = sortCreatedAt(messageData.messages);
+          if (messageData.messages.length > 0) {
+            // createdAt을 기준으로 시간순서 정렬
+            const sortedMessages = sortCreatedAt(messageData.messages);
 
-          // createdAt을 날짜와 시간으로 분리
-          const SeparatedTime: any = sortedMessages.map((message) => ({
-            ...message,
-            ...createSeparatedTime(message.createdAt),
-          }));
+            // createdAt을 날짜와 시간으로 분리
+            const SeparatedTime: any = sortedMessages.map((message) => ({
+              ...message,
+              ...createSeparatedTime(message.createdAt),
+            }));
 
-          // 마지막 날짜 저장
-          setLastDate(SeparatedTime[SeparatedTime.length - 1].date);
+            // 마지막 날짜 저장
+            setLastDate(SeparatedTime[SeparatedTime.length - 1].date);
 
-          // 중복 날짜, 시간 null로 반환
-          const modifyDateArray = modifyDate(SeparatedTime);
+            // 중복 날짜, 시간 null로 반환
+            const modifyDateArray = modifyDate(SeparatedTime);
 
-          setFetchChat(modifyDateArray);
-        }
-      });
-
-      newSocket.on('message-to-client', (messageObject: Message) => {
-        //console.log(messageObject);
-        setNewChat((newChat: Message[]) => {
-          // 중복 날짜, 시간 null로 반환
-          const modifyDateArray = modifyDate([
-            ...newChat,
-            {
-              ...messageObject,
-              ...createSeparatedTime(messageObject.createdAt),
-            },
-          ]);
-          return modifyDateArray;
+            setFetchChat(modifyDateArray);
+          }
         });
-      });
 
-      return () => {
-        setFetchChat([]);
-        setNewChat([]);
-        newSocket.disconnect();
-      };
-    } catch (error) {
-      // console.error('Error retrieving data:', error);
+        newSocket.on('message-to-client', (messageObject: Message) => {
+          //console.log(messageObject);
+          setNewChat((newChat: Message[]) => {
+            // 중복 날짜, 시간 null로 반환
+            const modifyDateArray = modifyDate([
+              ...newChat,
+              {
+                ...messageObject,
+                ...createSeparatedTime(messageObject.createdAt),
+              },
+            ]);
+            return modifyDateArray;
+          });
+        });
+
+        return () => {
+          setFetchChat([]);
+          setNewChat([]);
+          newSocket.disconnect();
+        };
+      } catch (error) {
+        // console.error('Error retrieving data:', error);
+      }
     }
-  }, [openChatDetail]);
+  }, [chatId]);
   return (
     <>
       <ScrollWrap>

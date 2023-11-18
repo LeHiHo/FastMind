@@ -31,7 +31,7 @@ export const loginSocket = (
 };
 
 export const chatSocket = (accessToken: any, chatId: string) => {
-  console.log(SERVER_URL);
+  //console.log(SERVER_URL);
   chattingSocket = io(`${SERVER_URL}chat?chatId=${chatId}`, {
     extraHeaders: {
       Authorization: `Bearer ${accessToken}`,
@@ -40,7 +40,7 @@ export const chatSocket = (accessToken: any, chatId: string) => {
   });
 
   chattingSocket.on('connect', () => {
-    console.log('Connected from server');
+    //console.log('Connected from server');
     setTimeout(() => {
       chattingSocket?.emit('fetch-messages');
     }, 500);
@@ -52,7 +52,7 @@ export const chatSocket = (accessToken: any, chatId: string) => {
   });
 
   chattingSocket.on('disconnect', () => {
-    console.log('Disconnected from server');
+    //console.log('Disconnected from server');
   });
 
   return chattingSocket;

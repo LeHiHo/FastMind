@@ -37,6 +37,7 @@ const ChattingDetail = ({ userData }: UserProps) => {
   const gamehandler = async (element: User) => {
     const random = randomNameFunc();
     const chat = await createGameRooms(random, [element.id], false);
+    setOpenChatDetail(false);
     navigate(`/room/:${chat.id}`);
   };
 
@@ -143,7 +144,7 @@ const ChattingDetail = ({ userData }: UserProps) => {
               overflow={'hidden'}
               display={'flex'}
               flexDirection={'column'}>
-              <DetailChatLayout userData={userData[0]} />
+              <DetailChatLayout userData={userData[0].chatId} />
             </ModalBody>
           </ModalContent>
         </Modal>
