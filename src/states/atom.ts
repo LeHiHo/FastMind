@@ -86,6 +86,11 @@ export const openChatDetailState = atom<boolean>({
   default: false,
 });
 
+export const openChatOnlineDetailState = atom<boolean>({
+  key: 'openChatOnlineDetailState',
+  default: false,
+});
+
 export const openNewChatState = atom<boolean>({
   key: 'openNewChatState',
   default: false,

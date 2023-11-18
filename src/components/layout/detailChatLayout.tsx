@@ -51,6 +51,7 @@ const DetailChatLayout = ({ userData }: any) => {
   const myUserId: string | undefined = getCookie('userId');
   const openChatDetail = useRecoilValue(openChatDetailState);
 
+  console.log(userData);
   const options = {
     suppressScrollX: true,
     suppressScrollY: false,
@@ -107,7 +108,7 @@ const DetailChatLayout = ({ userData }: any) => {
     } catch (error) {
       // console.error('Error retrieving data:', error);
     }
-  }, [userData.chatId, openChatDetail]);
+  }, [openChatDetail]);
   return (
     <>
       <ScrollWrap>

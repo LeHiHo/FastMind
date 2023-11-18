@@ -7,6 +7,7 @@ import {
   onlineUserState,
   openChatDetailState,
   openNewChatState,
+  userNewDetailData,
 } from '../../states/atom';
 import usePollingData from '../template/usePollingData';
 import ChattingDetail from './chattingDetail';
@@ -49,6 +50,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     useRecoilState(openChatDetailState);
   const [inputValue, setInputValue] = useState('');
   const [openNewChat, setOpenNewChat] = useRecoilState(openNewChatState);
+  const [userNew, setUserNew] = useRecoilState(userNewDetailData);
   const [chatUserData, setchatUserData] = useState<User[]>([
     {
       chatId: '',
@@ -118,7 +120,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     }
   };
   fetchData();
-  usePollingData(fetchData, [allMyChat, setAllMyChat]);
+  //usePollingData(fetchData, [allMyChat, setAllMyChat]);
 
   const handleChatDetailModal = async (
     chatId: string,
@@ -127,7 +129,6 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     picture: string,
     isOnline: boolean,
   ) => {
-    onClose();
     const user: User[] = [
       {
         chatId: chatId,
@@ -137,8 +138,11 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
         isOnline: isOnline,
       },
     ];
+    await setchatUserData(user);
+
+    onClose();
+
     await setOpenChatDetail(!openChatDetail);
-    setchatUserData(user);
   };
 
   const options = {

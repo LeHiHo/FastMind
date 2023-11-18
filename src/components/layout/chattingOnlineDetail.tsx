@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { openChatDetailState, userNewDetailData } from '../../states/atom';
+import {
+  openChatOnlineDetailState,
+  userNewDetailData,
+} from '../../states/atom';
 
 import {
   Modal,
@@ -25,13 +28,17 @@ type UserProps = {
   userData: User[];
 };
 
-const ChattingDetail = ({ userData }: UserProps) => {
-  const [openChatDetail, setOpenChatDetail] =
-    useRecoilState(openChatDetailState);
+const ChattingOnlineDetail = ({ userData }: UserProps) => {
+  const [openOnlineChatDetail, setOpenOnlineChatDetail] = useRecoilState(
+    openChatOnlineDetailState,
+  );
+  const [userNew, setUserNew] = useRecoilState(userNewDetailData);
+
   const navigate = useNavigate();
 
   const onClose = () => {
-    setOpenChatDetail(false);
+    setOpenOnlineChatDetail(false);
+    setUserNew(null);
   };
 
   const gamehandler = async (element: User) => {
@@ -42,8 +49,8 @@ const ChattingDetail = ({ userData }: UserProps) => {
 
   return (
     <>
-      {openChatDetail && (
-        <Modal isOpen={openChatDetail} onClose={onClose}>
+      {openOnlineChatDetail && (
+        <Modal isOpen={openOnlineChatDetail} onClose={onClose}>
           <ModalContent
             overflow={'hidden'}
             color="gray.500"
@@ -167,4 +174,4 @@ const OnlineSpan = styled.span`
   }
 `;
 
-export default ChattingDetail;
+export default ChattingOnlineDetail;
