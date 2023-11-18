@@ -113,7 +113,7 @@ const CheckGameRoom = () => {
     chatId: any,
     roomId: number,
   ) => {
-    if (numberOfPeople === 4) {
+    if (numberOfPeople >= 4) {
       let allMyChatData = await getAllMyChat();
       allMyChatData = allMyChatData.chats.filter((obj: any) => !obj.isPrivate);
 
@@ -187,7 +187,7 @@ const CheckGameRoom = () => {
                   height={50}
                   borderRadius={10}
                   backgroundColor={
-                    element.users.length !== 4 ? 'gray.50' : 'gray.300 '
+                    element.users.length < 4 ? 'gray.50' : 'gray.300 '
                   }
                   key={index}
                   cursor={'pointer'}
@@ -196,7 +196,7 @@ const CheckGameRoom = () => {
                   padding="0 30px"
                   _hover={{
                     backgroundColor:
-                      element.users.length !== 4 ? 'gray.100' : 'gray.300',
+                      element.users.length < 4 ? 'gray.100' : 'gray.300',
                   }}
                   onClick={() => {
                     // handleSelectRoom(element?.index);
@@ -219,7 +219,7 @@ const CheckGameRoom = () => {
                       width={50}
                       justifyContent={'space-between'}>
                       <Text>{element?.users?.length} / 4</Text>
-                      {element.users.length === 4 ? (
+                      {element.users.length >= 4 ? (
                         <RoundRight className="false"></RoundRight>
                       ) : (
                         <RoundRight className="true"></RoundRight>

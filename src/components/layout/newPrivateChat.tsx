@@ -49,9 +49,12 @@ const NewPrivateChat = () => {
   const [searchUserId, setSearchUserId] = useState('');
   const [selectId, setSelectId] = useState<User | null>(null);
   const [selectChatId, setSelectChatId] = useState<string | null>(null);
+  const [chatId, setChatId] = useState<string | null>(null);
 
   const onClose = () => {
     setOpenNewChat(false);
+    setOpenNewChatDetail(false);
+    setChatId(null);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,10 +98,12 @@ const NewPrivateChat = () => {
 
         const chatId = matchingChat ? matchingChat.id : null;
         if (chatId) {
+          await setChatId(matchingChat.id);
           setOpenNewChatDetail(true);
         } else {
           console.log('만들기');
-          await createGameRooms(element.id, [element.id], true);
+          const chat = await createGameRooms(element.id, [element.id], true);
+          await setChatId(chat.id);
           setOpenNewChatDetail(true);
         }
       } catch (error) {
@@ -125,7 +130,8 @@ const NewPrivateChat = () => {
       const foundObject: User = all.find(
         (item) => item.id === selectedOption.value,
       );
-      setSelectId(foundObject);
+      await setSelectId(foundObject);
+      console.log(selectId);
       checkChatFunc(foundObject);
     }
   };
@@ -138,7 +144,7 @@ const NewPrivateChat = () => {
             overflow={'hidden'}
             color="gray.500"
             width="300px"
-            height="420px"
+            height="465px"
             position={'relative'}
             top={0}
             right={-505}
@@ -185,15 +191,13 @@ const NewPrivateChat = () => {
                 )}
               </Flex>
 
-              {openNewChatDetail && (
-                <DetailChatLayout userData={selectChatId} />
-              )}
+              {openNewChatDetail && <DetailChatLayout userData={chatId} />}
 
               {!openNewChatDetail && (
                 <Text
                   height={'260px'}
                   textAlign={'center'}
-                  paddingTop={'120px'}>
+                  paddingTop={'150px'}>
                   대화 내용이 없습니다.
                 </Text>
               )}

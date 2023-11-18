@@ -131,7 +131,7 @@ export const getAllMyChat = async () => {
 
 export const leaveGameRoom = async (chatId: string) => {
   const res = await client.patch(`chat/leave`, { chatId: chatId });
-  console.log(res);
+  //console.log(res);
   return res;
 };
 
@@ -140,12 +140,12 @@ export const inviteGameRoom = async (chatId: string, users: string[]) => {
     chatId: chatId,
     users: users,
   });
-  console.log(res);
+  //console.log(res);
   return res;
 };
 
 export const getOnlyGameRoom = async (chatId: string) => {
   const res = await client.get(`chat/only?chatId=${chatId}`);
-  console.log(res);
+  //console.log(res);
   return res;
 };
