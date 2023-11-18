@@ -63,7 +63,6 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     if (userId) {
       try {
         let allMyChatData = await getAllMyChat();
-        console.log(allMyChatData);
         allMyChatData = allMyChatData.chats;
 
         // 비공개방만 필터

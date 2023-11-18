@@ -1,10 +1,12 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   allUserState,
   onlineUserState,
   allRoomNumberState,
   roomIdState,
   usersInRoom,
+  openChatDetailState,
+  userNewDetailData,
 } from '../../states/atom';
 import userList from '../template/userList';
 import { Card, Flex, Heading, Image, Text, IconButton } from '@chakra-ui/react';
@@ -49,6 +51,9 @@ const OnlineUserList = () => {
   const allOnlineUsers = onLine.users || [];
   const userId = getCookie('userId');
   const allChatState = useRecoilValue(allRoomNumberState);
+  const [userNew, setUserNew] = useRecoilState(userNewDetailData);
+  const [openChatDetail, setOpenChatDetail] =
+    useRecoilState(openChatDetailState);
 
   console.log(onLine);
 
@@ -78,9 +83,13 @@ const OnlineUserList = () => {
       const chatId = matchingChat ? matchingChat.id : null;
       if (chatId) {
         //navigate(`/room/:${chatId}`);
+        await setUserNew(matchingChat);
+        setOpenChatDetail(true);
       } else {
         console.log('만들기');
         const chat = await createGameRooms(element.id, [element.id], true);
+        await setUserNew(chat);
+        setOpenChatDetail(true);
         //navigate(`/room/:${chat.id}`);
       }
     }

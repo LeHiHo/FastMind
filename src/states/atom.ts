@@ -115,3 +115,8 @@ export const nowProfiles = atom<number>({
   key: 'nowProfiles',
   default: 0,
 });
+
+export const userNewDetailData = atom<any>({
+  key: 'userNewDetailData',
+  default: null,
+});
