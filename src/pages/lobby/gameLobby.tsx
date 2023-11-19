@@ -5,10 +5,12 @@ import { Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
 import CheckGameRoom from '../../components/template/lobby/checkGameRoom';
 import { controlLobbyReload, controlBack } from '../../hooks/useleaveHandle';
+import { useLoginSocket } from '../../hooks/useLoginSocket';
 
 const GameLobby = () => {
   controlLobbyReload();
   controlBack();
+  useLoginSocket();
   return (
     <>
       <Flex
