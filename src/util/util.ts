@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router';
-import { getAllUsers, leaveGameRoom, postRefresh, getUserData } from '../api';
+import { getAllUsers, leaveGameRoom, getUserData } from '../api';
 import { disconnectChattingSocket } from '../api/socket';
 import { Chat, ChatResponse } from '../interfaces/interface';
 
