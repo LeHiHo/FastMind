@@ -1,5 +1,10 @@
-import { useRecoilValue } from 'recoil';
-import { allUserState, onlineUserState } from '../../../states/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  allUserState,
+  onlineUserState,
+  userNewDetailData,
+  openChatOnlineDetailState,
+} from '../../../states/atom';
 import userList from '../../../util/userList';
 import { Card, Flex, Heading, Image, Text, IconButton } from '@chakra-ui/react';
 import { ChatIcon } from '@chakra-ui/icons';
@@ -9,6 +14,7 @@ import { createGameRooms, getAllMyChat } from '../../../api';
 import { randomNameFunc, getCookie } from '../../../util/util';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import ChattingOnlineDetail from './chattingOnlineDetail.tsx';
 
 interface Chat {
   id: string;
@@ -39,6 +45,11 @@ const OnlineUserList = () => {
   const allOnlineUsers = onLine.users || [];
   const userId = getCookie('userId');
 
+  const [userNew, setUserNew] = useRecoilState(userNewDetailData);
+
+  const [, setOpenOnlineChatDetail] = useRecoilState(openChatOnlineDetailState);
+
+
   const onlineUserListData = all.filter((element) => {
     return allOnlineUsers.includes(element.id);
   });
@@ -65,8 +76,26 @@ const OnlineUserList = () => {
       const chatId = matchingChat ? matchingChat.id : null;
       if (chatId) {
         //navigate(`/room/:${chatId}`);
+        const transformedData = {
+          chatId: matchingChat.id,
+          id: matchingChat.users[0].id,
+          name: matchingChat.users[0].username,
+          picture: matchingChat.users[0].picture,
+          isOnline: true,
+        };
+        await setUserNew([transformedData]);
+        setOpenOnlineChatDetail(true);
       } else {
-        // const chat = await createGameRooms(element.id, [element.id], true);
+        const chat = await createGameRooms(element.id, [element.id], true);
+        const transformedData = {
+          chatId: chat.id,
+          id: chat.users[0].id,
+          name: chat.users[0].username,
+          picture: chat.users[0].picture,
+          isOnline: true,
+        };
+        await setUserNew([transformedData]);
+        setOpenOnlineChatDetail(true);
         //navigate(`/room/:${chat.id}`);
       }
     }
@@ -165,6 +194,7 @@ const OnlineUserList = () => {
           ))}
         </PerfectScrollbar>
       </Card>
+      <ChattingOnlineDetail userData={userNew} />
     </>
   );
 };

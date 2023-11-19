@@ -6,7 +6,7 @@ import { ChatIcon, HamburgerIcon } from '@chakra-ui/icons';
 import LoginModal from '../template/login/loginModal';
 import { useRecoilValue } from 'recoil';
 import { chattingIdState } from '../../states/atom';
-import CheckPrivateChat from './checkPrivateChatModal';
+import CheckPrivateChat from '../template/lobby/checkPrivateChat';
 
 const Header: React.FC = () => {
   const id: string = useRecoilValue(chattingIdState);

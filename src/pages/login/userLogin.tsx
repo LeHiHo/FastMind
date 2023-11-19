@@ -57,7 +57,7 @@ function UserLogin() {
         errorMessage = '일치하는 아이디가 없습니다.';
         errorType = 'id';
       } else {
-        errorMessage = `로그인에 실패했습니다. 오류코드: ${e.message}`;
+        errorMessage = `로그인에 실패했습니다.`;
         errorType = 'general';
       }
       setShowAlert({ active: true, message: errorMessage, type: errorType });

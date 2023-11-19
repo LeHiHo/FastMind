@@ -1,18 +1,14 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  openChatDetailState,
-  privateChatDetail,
-  privateChatNew,
-} from '../../states/atom';
+import { useRecoilState } from 'recoil';
+import { privateChatDetail, privateChatNew } from '../../../states/atom';
 import { useState, useEffect } from 'react';
-import { chatSocket } from '../../api/socket';
+import { chatSocket } from '../../../api/socket';
 import {
   createSeparatedTime,
   sortCreatedAt,
   modifyDate,
-} from '../../util/chattingSort';
-import { getCookie } from '../../util/util';
+} from '../../../util/useChattingSort';
+import { getCookie } from '../../../util/util';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Flex, Text } from '@chakra-ui/layout';
@@ -26,7 +22,7 @@ interface Message {
   createdAt: Date;
 }
 
-const DetailChatLayout = ({ userData }: any) => {
+const DetailChatLayout = (chatId: any) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostData(e.target.value);
   };
@@ -44,7 +40,6 @@ const DetailChatLayout = ({ userData }: any) => {
   const [, setLastDate] = useState('');
   const accessToken: any = getCookie('accessToken');
   const myUserId: string | undefined = getCookie('userId');
-  const openChatDetail = useRecoilValue(openChatDetailState);
 
   const options = {
     suppressScrollX: true,
@@ -52,54 +47,57 @@ const DetailChatLayout = ({ userData }: any) => {
   };
 
   useEffect(() => {
-    try {
-      const newSocket = chatSocket(accessToken, userData.chatId);
-      setSocket(newSocket);
+    if (chatId) {
+      try {
+        const newSocket = chatSocket(accessToken, chatId.userData);
+        setSocket(newSocket);
 
-      newSocket.on('messages-to-client', (messageData) => {
-        if (messageData.messages.length > 0) {
-          // createdAt을 기준으로 시간순서 정렬
-          const sortedMessages = sortCreatedAt(messageData.messages);
+        newSocket.on('messages-to-client', (messageData) => {
 
-          // createdAt을 날짜와 시간으로 분리
-          const SeparatedTime: any = sortedMessages.map((message) => ({
-            ...message,
-            ...createSeparatedTime(message.createdAt),
-          }));
+          if (messageData.messages.length > 0) {
+            // createdAt을 기준으로 시간순서 정렬
+            const sortedMessages = sortCreatedAt(messageData.messages);
 
-          // 마지막 날짜 저장
-          setLastDate(SeparatedTime[SeparatedTime.length - 1].date);
+            // createdAt을 날짜와 시간으로 분리
+            const SeparatedTime: any = sortedMessages.map((message) => ({
+              ...message,
+              ...createSeparatedTime(message.createdAt),
+            }));
 
-          // 중복 날짜, 시간 null로 반환
-          const modifyDateArray = modifyDate(SeparatedTime);
+            // 마지막 날짜 저장
+            setLastDate(SeparatedTime[SeparatedTime.length - 1].date);
 
-          setFetchChat(modifyDateArray);
-        }
-      });
+            // 중복 날짜, 시간 null로 반환
+            const modifyDateArray = modifyDate(SeparatedTime);
 
-      newSocket.on('message-to-client', (messageObject: Message) => {
-        setNewChat((newChat: Message[]) => {
-          // 중복 날짜, 시간 null로 반환
-          const modifyDateArray = modifyDate([
-            ...newChat,
-            {
-              ...messageObject,
-              ...createSeparatedTime(messageObject.createdAt),
-            },
-          ]);
-          return modifyDateArray;
+            setFetchChat(modifyDateArray);
+          }
         });
-      });
 
-      return () => {
-        setFetchChat([]);
-        setNewChat([]);
-        newSocket.disconnect();
-      };
-    } catch (error) {
-      // console.error('Error retrieving data:', error);
+        newSocket.on('message-to-client', (messageObject: Message) => {
+          setNewChat((newChat: Message[]) => {
+            // 중복 날짜, 시간 null로 반환
+            const modifyDateArray = modifyDate([
+              ...newChat,
+              {
+                ...messageObject,
+                ...createSeparatedTime(messageObject.createdAt),
+              },
+            ]);
+            return modifyDateArray;
+          });
+        });
+
+        return () => {
+          setFetchChat([]);
+          setNewChat([]);
+          newSocket.disconnect();
+        };
+      } catch (error) {
+        // console.error('Error retrieving data:', error);
+      }
     }
-  }, [userData.chatId, openChatDetail]);
+  }, [chatId]);
   return (
     <>
       <ScrollWrap>

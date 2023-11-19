@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { getAllMyChat } from '../../api';
+import { getAllMyChat } from '../../../api';
 import {
   privateChatState,
   onlineUserState,
   openChatDetailState,
   openNewChatState,
-} from '../../states/atom';
-import usePollingData from '../../util/pollingData';
+} from '../../../states/atom';
 import ChattingDetail from './chattingDetail';
 import styled from 'styled-components';
 import {
@@ -19,11 +18,11 @@ import {
 } from '@chakra-ui/modal';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import { getCookie } from '../../util/util';
+import { getCookie } from '../../../util/util';
 import { Flex, Text } from '@chakra-ui/layout';
 import { Img } from '@chakra-ui/image';
 import { IconButton } from '@chakra-ui/button';
-import NewPrivateChat from '../template/lobby/newPrivateChat';
+import NewPrivateChat from './newPrivateChat';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -46,7 +45,8 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
 
   const [openChatDetail, setOpenChatDetail] =
     useRecoilState(openChatDetailState);
-  const [_, setOpenNewChat] = useRecoilState(openNewChatState);
+  const [, setOpenNewChat] = useRecoilState(openNewChatState);
+
   const [chatUserData, setchatUserData] = useState<User[]>([
     {
       chatId: '',
@@ -115,8 +115,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
       setAllMyChat(allChatData);
     }
   };
-
-  usePollingData(fetchData, [allMyChat, setAllMyChat]);
+  fetchData();
 
   const handleChatDetailModal = async (
     chatId: string,
@@ -125,7 +124,6 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
     picture: string,
     isOnline: boolean,
   ) => {
-    onClose();
     const user: User[] = [
       {
         chatId: chatId,
@@ -135,8 +133,11 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
         isOnline: isOnline,
       },
     ];
+    await setchatUserData(user);
+
+    onClose();
+
     await setOpenChatDetail(!openChatDetail);
-    setchatUserData(user);
   };
 
   const options = {
@@ -159,7 +160,7 @@ const CheckPrivateChat = ({ isOpen, onClose }: LoginModalProps) => {
           width="300px"
           height="420px"
           position={'relative'}
-          top={2.5}
+          top={0}
           right={-505}
           boxShadow="lg"
           border="1px solid #E2E8F0"

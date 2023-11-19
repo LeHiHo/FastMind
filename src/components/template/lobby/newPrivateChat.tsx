@@ -9,23 +9,29 @@ import {
   ModalHeader,
   ModalCloseButton,
 } from '@chakra-ui/react';
+
 import { Flex, Text } from '@chakra-ui/react';
+
 import 'react-perfect-scrollbar/dist/css/styles.css';
+
 import { useState } from 'react';
 import { getAllMyChat, createGameRooms } from '../../../api';
 import { Chat, User } from '../../../interfaces/interface';
 import Select, { StylesConfig } from 'react-select';
-import DetailChatLayout from '../../layout/detailChatLayout';
+import DetailChatLayout from './detailChatLayout.tsx';
 
 const NewPrivateChat = () => {
   const [openNewChat, setOpenNewChat] = useRecoilState(openNewChatState);
   const [openNewChatDetail, setOpenNewChatDetail] = useState(false);
   const [, setSearchUserId] = useState('');
-  const [, setSelectId] = useState<User | null>(null);
-  const [selectChatId, setSelectChatId] = useState<string | null>(null);
+  const [selectId, setSelectId] = useState<User | null>(null);
+  const [, setSelectChatId] = useState<string | null>(null);
+  const [chatId, setChatId] = useState<string | null>(null);
 
   const onClose = () => {
     setOpenNewChat(false);
+    setOpenNewChatDetail(false);
+    setChatId(null);
   };
 
   const all = useRecoilValue(allUserState);
@@ -65,13 +71,15 @@ const NewPrivateChat = () => {
 
         const chatId = matchingChat ? matchingChat.id : null;
         if (chatId) {
+          await setChatId(matchingChat.id);
           setOpenNewChatDetail(true);
         } else {
-          await createGameRooms(element.id, [element.id], true);
+          const chat = await createGameRooms(element.id, [element.id], true);
+          await setChatId(chat.id);
           setOpenNewChatDetail(true);
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
   };
@@ -94,7 +102,7 @@ const NewPrivateChat = () => {
       const foundObject: User = all.find(
         (item) => item.id === selectedOption.value,
       );
-      setSelectId(foundObject);
+      await setSelectId(foundObject);
       checkChatFunc(foundObject);
     }
   };
@@ -107,7 +115,7 @@ const NewPrivateChat = () => {
             overflow={'hidden'}
             color="gray.500"
             width="300px"
-            height="420px"
+            height="465px"
             position={'relative'}
             top={0}
             right={-505}
@@ -154,15 +162,13 @@ const NewPrivateChat = () => {
                 )}
               </Flex>
 
-              {openNewChatDetail && (
-                <DetailChatLayout userData={selectChatId} />
-              )}
+              {openNewChatDetail && <DetailChatLayout userData={chatId} />}
 
               {!openNewChatDetail && (
                 <Text
                   height={'260px'}
                   textAlign={'center'}
-                  paddingTop={'120px'}>
+                  paddingTop={'150px'}>
                   대화 내용이 없습니다.
                 </Text>
               )}
