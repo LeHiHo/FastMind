@@ -41,6 +41,8 @@ client.interceptors.response.use(
             return axios(error.config); // 원래 요청을 재시도
           } catch (refreshError) {
             console.error('토큰 재발급 시도 실패: ', refreshError);
+            redirect('/');
+            return Promise.reject(refreshError);
           }
         } else {
           swal({
@@ -49,6 +51,7 @@ client.interceptors.response.use(
             icon: 'error',
           });
           redirect('/');
+          return Promise.reject(error);
         }
       } else {
         console.error('API 요청 실패: ', error);

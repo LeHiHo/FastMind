@@ -119,7 +119,6 @@ const GameRoom: React.FC = () => {
       setIsQuizMaster(myId === quizMasterId);
       if (true) {
         if (myId === quizMasterId) {
-          // alert('당신은 출제자 입니다!');
           setShowAlert({
             active: true,
             message: '당신은 출제자 입니다!',
@@ -212,9 +211,7 @@ const GameRoom: React.FC = () => {
           <RoomInformation>{roomNumber}</RoomInformation>
           <RoomInformation>인원 수 </RoomInformation>
           <RoomInformation>{userRoomUser} / 4</RoomInformation>
-          {/* 인원수 추가 */}
         </RoomInfo>
-        {/* <InviteGameRoom chatId={chat}></InviteGameRoom> */}
         <BtnGroup>
           <Button onClick={startGame}>
             <Img

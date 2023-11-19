@@ -23,13 +23,15 @@ const CreateGameRoom = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const check = await createGameRooms(name, [], isPrivate);
-    if (check === undefined) {
-      swal({ title: '중복된 방이 있습니다.', icon: 'error' });
-    } else {
+    if (check !== undefined) {
+      setAllRooms((prevRooms) => [...prevRooms, check]);
+      navigate(`/room/:${check.id}`);
       swal({ title: '방 생성 성공', icon: 'success' });
+    } else {
+      swal({ title: '중복된 방이 있습니다.', icon: 'error' });
 
       setAllRooms([...allRooms, check]);
-      navigate(`/room/:${check.id}`);
+      navigate(`/room/${check.id}`);
     }
   };
 
