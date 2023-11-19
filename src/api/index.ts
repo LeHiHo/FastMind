@@ -3,7 +3,6 @@ import { CONTENT_TYPE, SERVER_ID, SERVER_URL } from '../constant';
 import { JoinData } from '../interfaces/interface';
 import { getCookie, setAccessToken } from '../util/util';
 import swal from 'sweetalert';
-import { redirect } from 'react-router-dom';
 
 const client = axios.create({
   baseURL: SERVER_URL,
@@ -26,38 +25,46 @@ client.interceptors.request.use(
   },
 );
 
+const redirectToHome = () => {
+  window.location.href = '/';
+};
+
 client.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const requestUrl = error.config?.url;
+    const currentUrl = window.location.pathname;
 
-    if (requestUrl !== 'login') {
-      if (error.response && error.response.status === 401) {
-        const refreshToken = getCookie('refreshToken');
-        if (refreshToken) {
-          try {
-            const res = await postRefresh(refreshToken);
-            setAccessToken(res.data.accessToken);
-            return axios(error.config); // 원래 요청을 재시도
-          } catch (refreshError) {
-            console.error('토큰 재발급 시도 실패: ', refreshError);
-            redirect('/');
-            return Promise.reject(refreshError);
-          }
-        } else {
+    if (currentUrl !== '/' && error.response && error.response.status === 401) {
+      const refreshToken = getCookie('refreshToken');
+      if (refreshToken) {
+        try {
+          const res = await postRefresh(refreshToken);
+          setAccessToken(res.data.accessToken);
+          return axios(error.config); // 원래 요청을 재시도
+        } catch (refreshError) {
           swal({
             title: '토큰만료',
-            text: '로그인이 만료되었습니다.',
+            text: '토큰 재발급에 실패했습니다.',
             icon: 'error',
+          }).then(() => {
+            redirectToHome();
           });
-          redirect('/');
-          return Promise.reject(error);
+          return Promise.reject(refreshError);
         }
       } else {
-        console.error('API 요청 실패: ', error);
+        swal({
+          title: '토큰만료',
+          text: '로그인이 만료되었습니다.',
+          icon: 'error',
+        }).then(() => {
+          redirectToHome();
+        });
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
+    } else {
+      console.error('API 요청 실패: ', error);
     }
+    return Promise.reject(error);
   },
 );
 

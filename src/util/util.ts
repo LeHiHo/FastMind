@@ -68,16 +68,6 @@ export const getMyUserData = async (userId: string) => {
   }
 };
 
-export const postRefreshToken = async (refreshToken: string) => {
-  try {
-    await postRefresh(refreshToken);
-    alert('토큰 재발급에 성공했습니다.');
-  } catch (e) {
-    console.error(e);
-    alert('토큰 재발급에 실패했습니다.');
-  }
-};
-
 export const titleAction = async (navigate: NavigateFunction, id: string) => {
   const url = window.location.pathname;
   if (url === '/' || url === '/account' || url === '/join') {
