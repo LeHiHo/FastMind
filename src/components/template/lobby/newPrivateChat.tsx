@@ -24,7 +24,7 @@ const NewPrivateChat = () => {
   const [openNewChat, setOpenNewChat] = useRecoilState(openNewChatState);
   const [openNewChatDetail, setOpenNewChatDetail] = useState(false);
   const [, setSearchUserId] = useState('');
-  const [selectId, setSelectId] = useState<User | null>(null);
+  const [, setSelectId] = useState<User | null>(null);
   const [, setSelectChatId] = useState<string | null>(null);
   const [chatId, setChatId] = useState<string | null>(null);
 
