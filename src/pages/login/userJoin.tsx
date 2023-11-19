@@ -76,8 +76,8 @@ const UserJoin = () => {
     switch (fieldName) {
       case 'id':
         if (value.trim() === '') error = '아이디을 입력해주세요';
-        else if (!/^[a-zA-Z]+$/.test(value))
-          error = '아이디는 알파벳만 포함할 수 있습니다.';
+        else if (!/^[a-zA-Z0-9]+$/.test(value))
+          error = '아이디는 알파벳과 숫자만 포함할 수 있습니다.';
 
         break;
       case 'password':
